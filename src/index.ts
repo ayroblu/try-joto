@@ -1,8 +1,13 @@
 import JotoAPI from 'joto-api'
 import 'dotenv/config'
 
+const username = process.env.USERNAME
+const password = process.env.PASSWORD
+if (!username) throw new Error('username not defined')
+if (!password) throw new Error('password not defined')
+
 const drawSVG = async (svg: string) => {
-  await JotoAPI.login(process.env.USERNAME, process.env.PASSWORD);
+  await JotoAPI.login(username, password);
   await JotoAPI.selectJoto(); // If you have multiple Jotos, you can pass the "Decide ID" or "Device Name" as a parameter
   await JotoAPI.drawSVG(svg);
 };
