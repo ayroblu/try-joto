@@ -1,5 +1,6 @@
 import JotoAPI from 'joto-api'
 import 'dotenv/config'
+import fs from 'fs';
 
 const username = process.env.USERNAME
 const password = process.env.PASSWORD
@@ -8,15 +9,16 @@ if (!password) throw new Error('password not defined')
 
 const drawSVG = async (svg: string) => {
   await JotoAPI.login(username, password);
-  await JotoAPI.selectJoto(); // If you have multiple Jotos, you can pass the "Decide ID" or "Device Name" as a parameter
+  await JotoAPI.selectJoto();
   await JotoAPI.drawSVG(svg);
 };
 
-// You can generate a SVG with https://github.com/NTag/joto-svg
-const svg = `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="500" height="500">
-  <g xmlns="http://www.w3.org/2000/svg">
-    <path d="M277.2 224.32c0.51-1.34 0.8-2.8 0.8-4.32 0-6.63-5.38-12-12-12-2.46 0-4.76 0.75-6.66 2.02C255.88 204.03 249.41 200 242 200c-11.05 0-20 8.95-20 20 0 0.34 0.01 0.68 0.03 1.01C215.03 223.47 210 230.15 210 238c0 9.94 8.06 18 18 18h46c8.84 0 16-7.16 16-16 0-7.74-5.5-14.2-12.8-15.68z" />
-  </g>
-</svg>`;
+const args = process.argv.slice(2);
+if (args.length < 1) {
+  throw new Error('Please pass an svg file path as an argument')
+}
+const filepath = args[0];
 
-drawSVG(svg);
+const svg = fs.readFileSync(filepath, 'utf8');
+
+drawSVG(svg).catch(console.error);
