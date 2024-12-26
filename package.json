@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "dotenv": "^16.3.1",
-    "joto-api": "^1.0.0"
+    "joto-api": "^1.0.0",
+    "svgson": "^5.3.1"
   },
   "devDependencies": {
     "@types/node": "^20.4.2",

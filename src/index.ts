@@ -1,13 +1,15 @@
 import JotoAPI from 'joto-api'
 import 'dotenv/config'
 import fs from 'fs';
+import { convertSvg } from './convert-svg.js';
 
 const username = process.env.USERNAME
 const password = process.env.PASSWORD
 if (!username) throw new Error('username not defined')
 if (!password) throw new Error('password not defined')
 
-const drawSVG = async (svg: string) => {
+const drawSVG = async (svgIn: string) => {
+  const svg = await convertSvg(svgIn)
   await JotoAPI.login(username, password);
   await JotoAPI.selectJoto();
   await JotoAPI.drawSVG(svg);
