@@ -1,7 +1,6 @@
-import fs from "fs";
 import * as svgson from "svgson";
 import { parsePath } from "./parseSvgPath";
-require("util").inspect.defaultOptions.depth = null;
+// require("util").inspect.defaultOptions.depth = null;
 
 export async function convertSvg(svgText: string) {
   const svg = await svgson.parse(svgText);
@@ -60,7 +59,7 @@ export async function convertSvg(svgText: string) {
   );
   // svg.children.reverse();
   const resultSvgText = svgson.stringify(svg);
-  return resultSvgText
+  return resultSvgText;
 }
 
 function getTransform(svg: svgson.INode): {
